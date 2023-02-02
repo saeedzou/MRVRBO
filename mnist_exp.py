@@ -520,8 +520,9 @@ def loss_f_funciton(labels, parameters, data):
 def nositify(labels, noise_rate, n_class):
     num = noise_rate*(labels.size()[0])
     num = int(num)
-    randint = torch.randint(1, 10, (num,))
-    index = torch.randperm(labels.size()[0])[:num]
+    randint = torch.randint(1, 10, (num,)).cuda()
+    index = torch.randperm(labels.size()[0])[:num].cuda()
+    labels = labels.cuda()
     labels[index] = (labels[index]+randint) % n_class
     return labels
 
