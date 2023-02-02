@@ -114,7 +114,7 @@ def train_model(args, train_loader, test_loader, spider_loader):
     batch_num = args.training_size//args.batch_size
     train_loss_avg = loss_train_avg(train_loader, parameters, device, batch_num)
     test_loss_avg = loss_test_avg(test_loader, parameters, device)
-    loss_time_results[0, :] = [train_loss_avg, test_loss_avg, (0.0), (0.0)]
+    loss_time_results[0, :] = [train_loss_avg.cpu(), test_loss_avg.cpu(), (0.0), (0.0)]
     print('Epoch: {:d} Train Loss: {:.4f} Test Loss: {:.4f}'.format(0, train_loss_avg, test_loss_avg))
     
     images_list, labels_list = [], []
@@ -189,6 +189,7 @@ def train_model(args, train_loader, test_loader, spider_loader):
     train_iterator = repeat([images_list[0], labels_list[0]])
     inner_opt = hg.GradientDescent(loss_inner, args.inner_lr, data_or_iter=train_iterator)
     inner_opt_cg = hg.GradientDescent(loss_inner, 1., data_or_iter=train_iterator)
+    lambda_x = lambda_x.detach().clone().requires_grad_(True)
     outer_opt = torch.optim.SGD(lr=args.outer_lr, params=[lambda_x])
     
     start_time = time.time() 
