@@ -65,7 +65,7 @@ def parse_args():
     
     if not args.save_folder:
         args.save_folder = './save_tb_results'
-    args.model_name = '{}_{}_bs_{}_olr_{}_ilr_{}_eta_{}_noiser_{}_q_{}_ite_{}'.format(args.alg, 
+    args.model_name = 'MNIST_{}_{}_bs_{}_olr_{}_ilr_{}_eta_{}_noiser_{}_q_{}_ite_{}'.format(args.alg, 
                        args.training_size, args.batch_size, args.outer_lr, args.inner_lr, args.eta, 
                        args.noise_rate, args.hessian_q, args.iterations)
     args.save_folder = os.path.join(args.save_folder, args.model_name)
