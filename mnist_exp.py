@@ -514,7 +514,7 @@ def loss_test_avg(data_loader, parameters, device):
 
 def loss_f_funciton(labels, parameters, data):
     output = torch.matmul(data, torch.t(parameters[:, 0:784]))+parameters[:, 784]
-    loss = F.cross_entropy(output, labels)
+    loss = F.cross_entropy(output, labels.cuda())
     return loss
 
 def nositify(labels, noise_rate, n_class):
