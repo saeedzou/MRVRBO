@@ -145,7 +145,7 @@ def train_model(args, train_loader, test_loader, spider_loader):
         images = torch.cat([images_temp]*(args.training_size // args.validation_size))
         labels = torch.cat([labels_temp]*(args.training_size // args.validation_size))
         output = torch.matmul(images, torch.t(parameters[0][:, 0:784]))+parameters[0][:, 784]
-        loss = F.cross_entropy(output, labels)
+        loss = F.cross_entropy(output, labels.cuda())
         return loss
 
     def out_f(data, parameters):
