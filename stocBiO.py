@@ -31,9 +31,8 @@ def stable(args, train_data_list, params_old, params, hparams, hparams_old, H_xy
     h_xy_k0,h_xy_k1,h_yy_k0,h_yy_k1 = torch.stack(h_xy_k0), torch.stack(h_xy_k1), torch.stack(h_yy_k0),torch.stack(h_yy_k1)
     h_yy_k0 = torch.reshape(h_yy_k0, [7850,-1])
     h_yy_k1 = torch.reshape(h_yy_k1, [7850,-1])
-
-    H_xy = (1-tao)*(H_xy_old-torch.t(h_xy_k0))+torch.t(h_xy_k1)
-    H_yy = (1-tao)*(H_yy_old-torch.t(h_yy_k0))+torch.t(h_yy_k1)
+    H_xy = (1-tao)*(H_xy_old.cuda()-torch.t(h_xy_k0))+torch.t(h_xy_k1)
+    H_yy = (1-tao)*(H_yy_old.cuda()-torch.t(h_yy_k0))+torch.t(h_yy_k1)
     
     x_update = -torch.matmul(torch.matmul(H_xy, torch.inverse(H_yy)), grad_fy)
     params_shape = params.size()
